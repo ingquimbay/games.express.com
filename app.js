@@ -11,6 +11,12 @@ var app = express();
 
 var config = require('./config.dev.js');
 
+var moongose = require('mongoose');
+
+moongose.connect(config.mongodb, {
+  useNewUrlParser: true
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
