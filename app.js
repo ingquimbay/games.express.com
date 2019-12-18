@@ -10,6 +10,7 @@ var gamesRouter = require('./routes/games')
 
 var app = express();
 var apiUsersRouter = require('./routes/api/users');
+var apiGamesRouter = require('./routes/api/games');
 
 var config = require('./config.dev.js');
 
@@ -33,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/games', usersRouter);
+app.use('/games', gamesRouter);
 app.use('/api/users', apiUsersRouter);
 app.use('/api/games', apiGamesRouter);
 

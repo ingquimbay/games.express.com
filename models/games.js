@@ -16,7 +16,7 @@ var Games = new Schema({
   },
   released: {
     type: String,
-    format: date
+    format: Date
   },
   platforms: {
     type: Array,
