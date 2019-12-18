@@ -17,11 +17,11 @@ router.get('/', function (req, res, next) {
   });
 });
 
-router.get('/:gameName', function (req, res) {
+router.get('/:gameId', function (req, res) {
 
-  var gameName = req.params.gameName;
+  var gameId = req.params.gameId;
   Games.findOne({
-    'gameName': gameName
+    '_id': gameId
   }, function (err, game) {
     if (err) {
       return res.json({
@@ -36,7 +36,7 @@ router.get('/:gameName', function (req, res) {
   });
 });
 
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
   Games.create(new Games({
     gameName: req.body.gameName,
     description: req.body.description,
@@ -46,14 +46,96 @@ router.post('/', function(req, res) {
     publisher: req.body.publisher,
     genre: req.body.genre,
     esrb_rating: req.body.esrb_rating
-  }), function(err, game){
-    
-    if(err){
-      return res.json({success: false, game: req.body, error: err});
+  }), function (err, game) {
+
+    if (err) {
+      return res.json({
+        success: false,
+        game: req.body,
+        error: err
+      });
+    }
+    return res.json({
+      success: true,
+      game: game
+    });
+  });
+});
+
+router.put('/', function (req, res) {
+
+  Games.findOne({
+    '_id': req.body._id
+  }, function (err, game) {
+
+    if (err) {
+      return res.json({
+        success: false,
+        error: err
+      });
     }
 
-    return res.json({success: true, game: game});
-    
+    if (game) {
+      let data = req.body;
+      if (data.gameName) {
+        game.gameName = data.gameName;
+      };
+      if (data.description) {
+        game.description = data.description;
+      };
+      if (data.released) {
+        game.released = data.released;
+      };
+      if (data.platform) {
+        game.platform = data.platform;
+      };
+      if (data.developer) {
+        game.developer = data.developer;
+      };
+      if (data.publisher) {
+        game.publisher = data.publisher;
+      };
+      if (data.genre) {
+        game.genre = data.genre;
+      };
+      if (data.esrb_rating) {
+        game.esrb_rating = data.esrb_rating;
+      };
+
+      game.save(function (err) {
+        if (err) {
+          return res.json({
+            success: false,
+            error: err
+          });
+        } else {
+          return res.json({
+            success: true,
+            game: game
+          });
+        }
+      });
+    }
+  });
+});
+
+router.delete('/:gameId', function (req, res) {
+
+  var gameId = req.params.gameId;
+
+  Games.remove({
+    '_id': gameId
+  }, function (err, removed) {
+    if (err) {
+      return res.json({
+        success: false,
+        error: err
+      });
+    }
+    return res.json({
+      success: true,
+      status: removed
+    });
   });
 });
 
