@@ -11,106 +11,29 @@ var Games = new Schema({
   },
   description: {
     type: String,
-    required: [true, 'Please enter a description'],
-    unique: [true, 'descriptions must be unique']
+    required: [true, 'Please enter a description']
   },
   released: {
     type: String,
     format: Date
   },
-  platforms: {
-    type: Array,
-    items: {
-      type: Object,
-      additionalProperties: false,
-      properties: {
-        platform: {
-          type: Object,
-          additionalProperties: false,
-          properties: {
-            id: {
-              type: Number
-            },
-            name: {
-              type: String
-            },
-            slug: {
-              type: String
-            }
-          }
-        }
-      }
-    }
+  platform: {
+    type: String
   },
-  developers: {
-    type: Array,
-    items: {
-      type: Object,
-      additionalProperties: false,
-      properties: {
-        id: {
-          type: Number
-        },
-        name: {
-          type: String
-        },
-        slug: {
-          type: String
-        }
-      }
-    }
+  developer: {
+    type: String
   },
-  genres: {
-    type: Array,
-    items: {
-      type: Object,
-      additionalProperties: false,
-      properties: {
-        id: {
-          type: Number
-        },
-        name: {
-          type: String
-        },
-        slug: {
-          type: String
-        }
-      }
-    }
+  publisher: {
+    type: String
   },
-  publishers: {
-    type: Array,
-    items: {
-      type: Object,
-      additionalProperties: false,
-      properties: {
-        id: {
-          type: Number
-        },
-        name: {
-          type: String
-        },
-        slug: {
-          type: String
-        }
-      }
-    }
+  genre: {
+    type: String
   },
   esrb_rating: {
-    type: Object,
-    additionalProperties: false,
-    properties: {
-      id: {
-        type: Number
-      },
-      name: {
-        type: String
-      },
-      slug: {
-        type: String
-      }
-    }
+    type: String
   }
 });
 
-module.exports  = mongoose.model('Games', Games);
+Games.plugin(uniqueValidator);
+
+module.exports = mongoose.model('Games', Games);
