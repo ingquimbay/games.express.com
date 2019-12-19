@@ -45,7 +45,9 @@ router.post('/', function (req, res) {
     developer: req.body.developer,
     publisher: req.body.publisher,
     genre: req.body.genre,
-    esrb_rating: req.body.esrb_rating
+    esrb_rating: req.body.esrb_rating,
+    gameImage: req.body.gameImage,
+    website: req.body.website
   }), function (err, game) {
 
     if (err) {
@@ -100,6 +102,12 @@ router.put('/', function (req, res) {
       };
       if (data.esrb_rating) {
         game.esrb_rating = data.esrb_rating;
+      };
+      if (data.gameImage) {
+        game.gameImage = data.gameImage;
+      };
+      if (data.website) {
+        game.website = data.website;
       };
 
       game.save(function (err) {

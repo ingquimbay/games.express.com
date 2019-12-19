@@ -31,6 +31,12 @@ var Games = new Schema({
   },
   esrb_rating: {
     type: String
+  },
+  gameImage: {
+    type: String
+  },
+  website: {
+    type: String
   }
 });
 
